@@ -23,57 +23,13 @@ paths:
           description: OK
       description: Create or update setting.
       requestBody:
-        content:
-          application/json:
-            schema: 
-              type: object
-              x-examples:
-                example-1:
-                  image_uri: string
-                  release_at: string
-                  is_released: true
-              properties:
-                image_uri:
-                  type: string
-                release_at:
-                  type: string
-                is_released:
-                  type: boolean
-              required:
-                - image_uri
-                - release_at
-                - is_released
+        $ref: '#/components/requestBodies/Setting'
     get:
       summary: Retrieve Setting
       operationId: get-setting
       responses:
         '200':
-          description: OK
-          content:
-            application/json:
-              schema:
-                type: object
-                x-examples:
-                  example-1:
-                    image_uri: string
-                    release_at: string
-                    is_released: true
-                properties:
-                  image_uri:
-                    type: string
-                  release_at:
-                    type: string
-                  is_released:
-                    type: boolean
-                required:
-                  - image_uri
-                  - release_at
-                  - is_released
-              examples: {}
-            application/xml:
-              schema:
-                type: object
-                properties: {}
+          $ref: '#/components/responses/Setting'
       x-internal: false
       description: Retrieve setting.
   /repositories:
@@ -83,79 +39,18 @@ paths:
       operationId: get-repositories
       responses:
         '200':
-          description: OK
-          content:
-            application/json:
-              schema:
-                type: object
-                x-examples:
-                  example-1:
-                    name: string
-                    uri: string
-                    created_at: string
-                properties:
-                  name:
-                    type: string
-                  uri:
-                    type: string
-                  created_at:
-                    type: string
-                required:
-                  - name
-                  - uri
-                  - created_at
+          $ref: '#/components/responses/Repository'
       description: List repositories.
   '/images/{repository_uri}':
     get:
       summary: List Images
       responses:
         '200':
-          description: OK
-          content:
-            application/json:
-              schema:
-                type: object
-                x-examples:
-                  example-1:
-                    uri: string
-                    tags:
-                      - string
-                    size: 0
-                    repository_name: string
-                    digest: string
-                    pushed_at: string
-                properties:
-                  uri:
-                    type: string
-                  tags:
-                    type: array
-                    items:
-                      type: string
-                  size:
-                    type: integer
-                  repository_name:
-                    type: string
-                  digest:
-                    type: string
-                  pushed_at:
-                    type: string
-                required:
-                  - uri
-                  - tags
-                  - size
-                  - repository_name
-                  - digest
-                  - pushed_at
-              examples: {}
+          $ref: '#/components/responses/Image'
       operationId: get-images
       description: List images.
     parameters:
-      - schema:
-          type: string
-        name: repository_uri
-        in: path
-        description: ECR Repository URI
-        required: true
+      - $ref: '#/components/parameters/repository_uri'
 components:
   schemas:
     Setting:
@@ -179,9 +74,9 @@ components:
       title: Repository
       x-stoplight:
         id: a5hmmb5rdowb8
-      type: object
       x-internal: false
       description: Repository
+      type: object
       properties:
         name:
           type: string
@@ -233,25 +128,9 @@ components:
   requestBodies:
     Setting:
       content:
-        application/json:
-          schema:
-            type: object
-            properties:
-              image_uri:
-                type: string
-              release_at:
-                type: string
-              is_released:
-                type: boolean
-            x-examples:
-              example-1:
-                image_uri: string
-                release_at: string
-                is_released: true
         application/xml:
           schema:
-            type: object
-            properties: {}
+            $ref: '#/components/schemas/Setting'
         multipart/form-data:
           schema:
             type: object
@@ -263,46 +142,21 @@ components:
       content:
         application/json:
           schema:
-            type: object
-            properties:
-              name:
-                type: string
-              uri:
-                type: string
-              created_at:
-                type: string
-            x-examples:
-              example-1:
-                name: string
-                uri: string
-                created_at: string
+            $ref: '#/components/schemas/Repository'
     Image:
-      description: Image
+      description: Example response
       content:
         application/json:
           schema:
-            type: object
+            $ref: '#/components/schemas/Image'
+    Setting:
+      description: Example response
+      content:
+        application/json:
+          schema:
             properties:
-              uri:
+              id:
                 type: string
-              tags:
-                type: array
-                items:
-                  type: string
-              size:
-                type: integer
-              repository_name:
-                type: string
-              digest:
-                type: string
-              pushed_at:
-                type: string
-            x-examples:
-              example-1:
-                uri: string
-                tags:
-                  - string
-                size: 0
-                repository_name: string
-                digest: string
-                pushed_at: string
+        application/xml:
+          schema:
+            $ref: '#/components/schemas/Setting'
