@@ -1,0 +1,308 @@
+openapi: 3.0.0
+info:
+  title: select-repository
+  version: '1.0'
+  contact:
+    name: Hiroyasu Matsuhisa
+    url: 'https://hmatsu47.github.com'
+    email: hmatsu47@gmail.com
+  license:
+    name: MIT
+    url: 'https://hmatsu47.github.com'
+  description: Select ECR Repository
+servers:
+  - url: 'http://localhost:3000'
+paths:
+  /setting:
+    parameters: []
+    post:
+      summary: Create or Update Setting
+      operationId: post-setting
+      responses:
+        '200':
+          description: OK
+      description: Create or update setting.
+      requestBody:
+        content:
+          application/json:
+            schema: 
+              type: object
+              x-examples:
+                example-1:
+                  image_uri: string
+                  release_at: string
+                  is_released: true
+              properties:
+                image_uri:
+                  type: string
+                release_at:
+                  type: string
+                is_released:
+                  type: boolean
+              required:
+                - image_uri
+                - release_at
+                - is_released
+    get:
+      summary: Retrieve Setting
+      operationId: get-setting
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                x-examples:
+                  example-1:
+                    image_uri: string
+                    release_at: string
+                    is_released: true
+                properties:
+                  image_uri:
+                    type: string
+                  release_at:
+                    type: string
+                  is_released:
+                    type: boolean
+                required:
+                  - image_uri
+                  - release_at
+                  - is_released
+              examples: {}
+            application/xml:
+              schema:
+                type: object
+                properties: {}
+      x-internal: false
+      description: Retrieve setting.
+  /repositories:
+    parameters: []
+    get:
+      summary: List Repositories
+      operationId: get-repositories
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                x-examples:
+                  example-1:
+                    name: string
+                    uri: string
+                    created_at: string
+                properties:
+                  name:
+                    type: string
+                  uri:
+                    type: string
+                  created_at:
+                    type: string
+                required:
+                  - name
+                  - uri
+                  - created_at
+      description: List repositories.
+  '/images/{repository_uri}':
+    get:
+      summary: List Images
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                x-examples:
+                  example-1:
+                    uri: string
+                    tags:
+                      - string
+                    size: 0
+                    repository_name: string
+                    digest: string
+                    pushed_at: string
+                properties:
+                  uri:
+                    type: string
+                  tags:
+                    type: array
+                    items:
+                      type: string
+                  size:
+                    type: integer
+                  repository_name:
+                    type: string
+                  digest:
+                    type: string
+                  pushed_at:
+                    type: string
+                required:
+                  - uri
+                  - tags
+                  - size
+                  - repository_name
+                  - digest
+                  - pushed_at
+              examples: {}
+      operationId: get-images
+      description: List images.
+    parameters:
+      - schema:
+          type: string
+        name: repository_uri
+        in: path
+        description: ECR Repository URI
+        required: true
+components:
+  schemas:
+    Setting:
+      title: Setting
+      type: object
+      description: Release setting
+      x-examples: {}
+      x-internal: false
+      properties:
+        image_uri:
+          type: string
+        release_at:
+          type: string
+        is_released:
+          type: boolean
+      required:
+        - image_uri
+        - release_at
+        - is_released
+    Repository:
+      title: Repository
+      x-stoplight:
+        id: a5hmmb5rdowb8
+      type: object
+      x-internal: false
+      description: Repository
+      properties:
+        name:
+          type: string
+        uri:
+          type: string
+        created_at:
+          type: string
+      required:
+        - name
+        - uri
+        - created_at
+    Image:
+      title: Image
+      x-stoplight:
+        id: 80mchgsyg9n8w
+      type: object
+      x-internal: false
+      description: Image
+      properties:
+        uri:
+          type: string
+        tags:
+          type: array
+          items:
+            type: string
+        size:
+          type: number
+        repository_name:
+          type: string
+        digest:
+          type: string
+        pushed_at:
+          type: string
+      required:
+        - uri
+        - tags
+        - size
+        - repository_name
+        - digest
+        - pushed_at
+  parameters:
+    repository_uri:
+      name: repository_uri
+      in: path
+      required: true
+      schema:
+        type: string
+      description: ECR Repository URI
+  requestBodies:
+    Setting:
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              image_uri:
+                type: string
+              release_at:
+                type: string
+              is_released:
+                type: boolean
+            x-examples:
+              example-1:
+                image_uri: string
+                release_at: string
+                is_released: true
+        application/xml:
+          schema:
+            type: object
+            properties: {}
+        multipart/form-data:
+          schema:
+            type: object
+            properties: {}
+      description: Setting
+  responses:
+    Repository:
+      description: Repository
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              name:
+                type: string
+              uri:
+                type: string
+              created_at:
+                type: string
+            x-examples:
+              example-1:
+                name: string
+                uri: string
+                created_at: string
+    Image:
+      description: Image
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              uri:
+                type: string
+              tags:
+                type: array
+                items:
+                  type: string
+              size:
+                type: integer
+              repository_name:
+                type: string
+              digest:
+                type: string
+              pushed_at:
+                type: string
+            x-examples:
+              example-1:
+                uri: string
+                tags:
+                  - string
+                size: 0
+                repository_name: string
+                digest: string
+                pushed_at: string
