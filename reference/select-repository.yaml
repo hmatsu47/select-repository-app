@@ -4,11 +4,11 @@ info:
   version: '1.0'
   contact:
     name: Hiroyasu Matsuhisa
-    url: 'https://hmatsu47.github.com'
+    url: 'https://github.com/hmatsu47'
     email: hmatsu47@gmail.com
   license:
     name: MIT
-    url: 'https://hmatsu47.github.com'
+    url: 'https://github.com/hmatsu47/select-repository-app/blob/master/LICENSE'
   description: Select ECR Repository
 servers:
   - url: 'http://localhost:3000'
