@@ -82,12 +82,9 @@ components:
           type: string
         uri:
           type: string
-        created_at:
-          type: string
       required:
         - name
         - uri
-        - created_at
     Image:
       title: Image
       x-stoplight:
@@ -96,7 +93,7 @@ components:
       x-internal: false
       description: Image
       properties:
-        uri:
+        url:
           type: string
         tags:
           type: array
@@ -111,7 +108,7 @@ components:
         pushed_at:
           type: string
       required:
-        - uri
+        - url
         - tags
         - size
         - repository_name
