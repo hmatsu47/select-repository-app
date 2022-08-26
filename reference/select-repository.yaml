@@ -41,7 +41,7 @@ paths:
         '200':
           $ref: '#/components/responses/Repository'
       description: List repositories.
-  '/images/{repository_uri}':
+  '/images/{repository_name}':
     get:
       summary: List Images
       responses:
@@ -50,7 +50,7 @@ paths:
       operationId: get-images
       description: List images.
     parameters:
-      - $ref: '#/components/parameters/repository_uri'
+      - $ref: '#/components/parameters/repository_name'
 components:
   schemas:
     Setting:
@@ -82,12 +82,9 @@ components:
           type: string
         uri:
           type: string
-        created_at:
-          type: string
       required:
         - name
         - uri
-        - created_at
     Image:
       title: Image
       x-stoplight:
@@ -118,13 +115,13 @@ components:
         - digest
         - pushed_at
   parameters:
-    repository_uri:
-      name: repository_uri
+    repository_name:
+      name: repository_name
       in: path
       required: true
       schema:
         type: string
-      description: ECR Repository URI
+      description: ECR Repository Name
   requestBodies:
     Setting:
       content:
