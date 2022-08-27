@@ -9,54 +9,62 @@ info:
   license:
     name: MIT
     url: 'https://github.com/hmatsu47/select-repository-app/blob/master/LICENSE'
-  description: Select ECR Repository
+  description: ECRリポジトリ選択用API
 servers:
   - url: 'http://localhost:3000'
 paths:
   /setting:
     parameters: []
     post:
-      summary: Create or Update Setting
-      operationId: post-setting
+      summary: リリース設定の生成・更新
+      operationId: postSetting
       responses:
         '200':
           description: OK
-      description: Create or update setting.
+      description: リリース設定の生成・更新
       requestBody:
-        $ref: '#/components/requestBodies/Setting'
+        $ref: '#/components/requestBodies/postSettingRequest'
+      tags:
+        - setting
     get:
-      summary: Retrieve Setting
-      operationId: get-setting
+      summary: リリース設定の取得
+      operationId: getSetting
       responses:
         '200':
-          $ref: '#/components/responses/Setting'
+          $ref: '#/components/responses/getSettingResponse'
       x-internal: false
-      description: Retrieve setting.
+      description: リリース設定の取得
+      tags:
+        - setting
   /repositories:
     parameters: []
     get:
-      summary: List Repositories
-      operationId: get-repositories
+      summary: リポジトリ一覧の取得
+      operationId: getRepositories
       responses:
         '200':
-          $ref: '#/components/responses/Repository'
-      description: List repositories.
+          $ref: '#/components/responses/getRepositoryResponse'
+      description: リポジトリ一覧の取得
+      tags:
+        - repository
   '/images/{repository_name}':
     get:
-      summary: List Images
+      summary: コンテナイメージ一覧の取得
       responses:
         '200':
-          $ref: '#/components/responses/Image'
-      operationId: get-images
-      description: List images.
+          $ref: '#/components/responses/getImageResponse'
+      operationId: getImages
+      description: コンテナイメージ一覧の取得
+      tags:
+        - image
     parameters:
       - $ref: '#/components/parameters/repository_name'
 components:
   schemas:
-    Setting:
-      title: Setting
+    setting:
+      title: setting
       type: object
-      description: Release setting
+      description: リリース設定モデル
       x-examples: {}
       x-internal: false
       properties:
@@ -70,12 +78,12 @@ components:
         - image_uri
         - release_at
         - is_released
-    Repository:
-      title: Repository
+    repository:
+      title: repository
       x-stoplight:
         id: a5hmmb5rdowb8
       x-internal: false
-      description: Repository
+      description: リポジトリモデル
       type: object
       properties:
         name:
@@ -85,13 +93,13 @@ components:
       required:
         - name
         - uri
-    Image:
-      title: Image
+    image:
+      title: image
       x-stoplight:
         id: 80mchgsyg9n8w
       type: object
       x-internal: false
-      description: Image
+      description: コンテナイメージモデル
       properties:
         uri:
           type: string
@@ -121,39 +129,42 @@ components:
       required: true
       schema:
         type: string
-      description: ECR Repository Name
+      description: リポジトリ名
   requestBodies:
-    Setting:
+    postSettingRequest:
       content:
         application/xml:
           schema:
-            $ref: '#/components/schemas/Setting'
+            $ref: '#/components/schemas/setting'
         multipart/form-data:
           schema:
             type: object
             properties: {}
-      description: Setting
+      description: リリース設定リクエストボディ
   responses:
-    Repository:
-      description: Repository
+    getRepositoryResponse:
+      description: リポジトリレスポンスボディ
       content:
         application/json:
           schema:
-            $ref: '#/components/schemas/Repository'
-    Image:
-      description: Example response
+            $ref: '#/components/schemas/repository'
+    getImageResponse:
+      description: コンテナイメージレスポンスボディ
       content:
         application/json:
           schema:
-            $ref: '#/components/schemas/Image'
-    Setting:
-      description: Example response
+            $ref: '#/components/schemas/image'
+    getSettingResponse:
+      description: リリース設定レスポンスボディ
       content:
-        application/json:
-          schema:
-            properties:
-              id:
-                type: string
         application/xml:
           schema:
-            $ref: '#/components/schemas/Setting'
+            $ref: '#/components/schemas/setting'
+  securitySchemes: {}
+tags:
+  - name: image
+    description: コンテナイメージ
+  - name: repository
+    description: リポジトリ
+  - name: setting
+    description: リリース設定
