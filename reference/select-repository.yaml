@@ -185,13 +185,9 @@ components:
   requestBodies:
     settingRequest:
       content:
-        application/xml:
+        application/json:
           schema:
             $ref: '#/components/schemas/Setting'
-        multipart/form-data:
-          schema:
-            type: object
-            properties: {}
       description: リリース設定リクエストボディ
   responses:
     repositoriesResponse:
