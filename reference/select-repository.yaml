@@ -13,8 +13,9 @@ info:
 servers:
   - url: 'http://localhost:3000'
 paths:
-  /setting:
-    parameters: []
+  '/setting/{service_name}':
+    parameters:
+      - $ref: '#/components/parameters/service_name'
     post:
       summary: リリース設定の生成・更新
       operationId: postSetting
