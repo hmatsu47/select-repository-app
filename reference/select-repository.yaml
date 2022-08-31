@@ -98,8 +98,6 @@ components:
         is_released:
           type: boolean
       required:
-        - image_uri
-        - release_at
         - is_released
     Repository:
       title: Repository
