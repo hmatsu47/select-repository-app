@@ -41,6 +41,15 @@ paths:
           $ref: '#/components/responses/settingResponse'
         default:
           $ref: '#/components/responses/errorResponse'
+    delete:
+      summary: ''
+      operationId: delete-setting-service_name
+      responses:
+        '204':
+          description: No Content
+          headers: {}
+        default:
+          $ref: '#/components/responses/errorResponse'
   '/repositories/{service_name}':
     parameters:
       - $ref: '#/components/parameters/service_name'
