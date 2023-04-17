@@ -42,12 +42,14 @@ paths:
         default:
           $ref: '#/components/responses/errorResponse'
     delete:
-      summary: ''
+      summary: リリース設定の削除
       operationId: deleteSetting
       responses:
         '200':
           $ref: '#/components/responses/settingResponse'
       description: リリース設定の削除（リリース取り消し）
+      tags:
+        - setting
   '/repositories/{service_name}':
     parameters:
       - $ref: '#/components/parameters/service_name'
