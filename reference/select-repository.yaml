@@ -42,7 +42,7 @@ paths:
         default:
           $ref: '#/components/responses/errorResponse'
     delete:
-      summary: ''
+      summary: リリース設定の削除
       operationId: deleteSetting
       responses:
         '200':
